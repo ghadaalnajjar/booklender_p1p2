@@ -1,4 +1,4 @@
-package se.lexicon.alnajjar.booklender.models;
+package se.lexicon.alnajjar.booklender.entity;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

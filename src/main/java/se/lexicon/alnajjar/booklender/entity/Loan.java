@@ -1,17 +1,26 @@
-package se.lexicon.alnajjar.booklender.models;
+package se.lexicon.alnajjar.booklender.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
 public class Loan {
+
+    @Id
+    @GeneratedValue
     private long loanId;
+
+    @ManyToOne
     private LibraryUser loanTaker;
+
+    @ManyToOne
     private Book book;
     private LocalDate loanDate;
     private boolean terminated;
 
-    public Loan(long loanId) {
-        this.loanId = loanId;
+    public Loan() {
     }
 
     public Loan(LocalDate loanDate, boolean terminated) {
@@ -88,10 +97,7 @@ public class Loan {
     public String toString() {
         return "Loan{" +
                 "loanId=" + loanId +
-                ", loanTaker=" + loanTaker +
-                ", book=" + book +
                 ", loanDate=" + loanDate +
-                ", terminated=" + terminated +
                 '}';
     }
 }

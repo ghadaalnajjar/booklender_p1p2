@@ -1,12 +1,21 @@
-package se.lexicon.alnajjar.booklender.models;
+package se.lexicon.alnajjar.booklender.entity;
 
+import com.sun.istack.internal.NotNull;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
 public class LibraryUser {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     private LocalDate regDate;
     private String name;
+    @Column(unique = true)
+    @NotNull
     private String email;
 
     public LibraryUser() {
