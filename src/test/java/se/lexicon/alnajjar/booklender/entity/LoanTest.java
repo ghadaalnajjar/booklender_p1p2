@@ -2,56 +2,53 @@ package se.lexicon.alnajjar.booklender.entity;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LoanTest {
 
     Loan testObject;
 
-    long loanId;
-    private LibraryUser loanTaker;
-    private Book book;
-    private LocalDate loanDate;
-    private boolean terminate;
+    LibraryUser libraryUser;
+    Book book;
 
     @BeforeEach
     public void setUp() {
-        loanId = 111111;
-        loanTaker = new LibraryUser ();
-        book = new Book();
-        terminate = true;
 
-        testObject = new Loan(loanId, loanTaker, book, LocalDate.parse("2020-10-20"), terminate);
+        libraryUser = new LibraryUser(1, LocalDate.now(), "Maha", "m@yahoo.com");
+        book = new Book(1, "Hello Pippi", true, true, 30, BigDecimal.valueOf(222.344), "good");
+
+        testObject = new Loan(100, libraryUser, book, LocalDate.now(), false);
     }
 
     @Test
     public void test_create() {
-        assertEquals(loanId, testObject.getLoanId());
-        assertEquals(loanTaker, testObject.getLoanTaker());
+        assertEquals(100, testObject.getLoanId());
+        assertEquals(libraryUser, testObject.getLoanTaker());
         assertEquals(book, testObject.getBook());
-        assertEquals(LocalDate.parse("2020-10-20"), testObject.getLoanDate());
-        assertEquals(terminate, testObject.isTerminate());
+        assertEquals(LocalDate.now(), testObject.getLoanDate());
+        assertEquals(false, testObject.isTerminate());
     }
 
     @Test
     public void test_equal() {
-        Loan isEqual = new Loan(loanId, loanTaker, book, LocalDate.parse("2020-10-20"), terminate);
+        Loan isEqual = new Loan(100,libraryUser, book, LocalDate.now(), false);
         assertTrue(testObject.equals(isEqual));
     }
 
     @Test
     public void test_hashCode() {
-        Loan expected = new Loan(loanId, loanTaker, book, LocalDate.parse("2020-10-20"), terminate);
+        Loan expected = new Loan(100, libraryUser, book, LocalDate.now(),false);
         assertEquals(expected.hashCode(), testObject.hashCode());
     }
 
     @Test
     public void test_toString() {
         String toString = testObject.toString();
-        assertTrue(toString.contains("1111"));
-        assertTrue(toString.contains("2020-10-20"));
+        assertTrue(toString.contains("100"));
+        assertTrue(toString.contains(LocalDate.now().toString()));
+        assertFalse(toString.contains("false"));
     }
 }

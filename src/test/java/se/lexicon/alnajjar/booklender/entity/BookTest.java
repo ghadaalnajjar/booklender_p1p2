@@ -3,10 +3,7 @@ package se.lexicon.alnajjar.booklender.entity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BookTest {
 
@@ -21,8 +18,11 @@ public class BookTest {
     public void test_create() {
         assertEquals("Hello Pippi", testObject.getTitle());
         assertEquals(30, testObject.getMaxLoansDays());
+        assertFalse(testObject.isAvailable());
+        assertFalse(testObject.isReserved());
         assertEquals(BigDecimal.valueOf(222.344), testObject.getFinePerDay());
         assertEquals("good", testObject.getDescription());
+
     }
 
     @Test

@@ -2,7 +2,6 @@ package se.lexicon.alnajjar.booklender.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -24,7 +23,7 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(LibraryUser loanTaker, Book book, LocalDate loanDate, boolean terminated) {
+    public Loan(LibraryUser loanTaker, Book book, LocalDate loanDate, boolean terminate) {
         this.loanTaker = loanTaker;
         this.book = book;
         this.loanDate = loanDate;
@@ -96,7 +95,10 @@ public class Loan {
     public String toString() {
         return "Loan{" +
                 "loanId=" + loanId +
+                ", loanTaker=" + loanTaker +
+                ", book=" + book +
                 ", loanDate=" + loanDate +
+                ", terminate=" + terminate +
                 '}';
     }
 }

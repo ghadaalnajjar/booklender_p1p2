@@ -22,18 +22,20 @@ public class BookRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        book = testObject.save(new Book("Hello Pippi",30, BigDecimal.valueOf(222.344), "good"));
+        book = testObject.save(new Book("Hello Pippi",30, BigDecimal.valueOf(222.344),"good"));
     }
 
     @Test
     public void find_By_Reserved() {
         List<Book> findByReserved = testObject.findByReserved(false);
+        System.out.println("findByReserved = " + findByReserved);
         assertEquals(false, book.isReserved());
     }
 
     @Test
     public void find_By_Available() {
         List<Book> findByAvailable = testObject.findByAvailable(false);
+        System.out.println("findByAvailable = " + findByAvailable);
         assertEquals(false, book.isAvailable());
     }
 
