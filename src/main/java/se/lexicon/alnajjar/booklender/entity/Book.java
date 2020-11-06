@@ -23,10 +23,8 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, boolean available, boolean reserved, int maxLoansDays, BigDecimal finePerDay, String description) {
+    public Book(String title, int maxLoansDays, BigDecimal finePerDay, String description) {
         this.title = title;
-        this.available = available;
-        this.reserved = reserved;
         this.maxLoansDays = maxLoansDays;
         this.finePerDay = finePerDay;
         this.description = description;
@@ -44,10 +42,6 @@ public class Book {
 
     public int getBookId() {
         return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
     }
 
     public String getTitle() {

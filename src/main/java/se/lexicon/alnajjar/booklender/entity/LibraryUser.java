@@ -1,7 +1,5 @@
 package se.lexicon.alnajjar.booklender.entity;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -15,7 +13,6 @@ public class LibraryUser {
     private LocalDate regDate;
     private String name;
     @Column(unique = true)
-    @NotNull
     private String email;
 
     public LibraryUser() {
@@ -36,10 +33,6 @@ public class LibraryUser {
 
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public LocalDate getRegDate() {

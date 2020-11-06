@@ -15,16 +15,16 @@ public class LoanTest {
     private LibraryUser loanTaker;
     private Book book;
     private LocalDate loanDate;
-    private boolean terminated;
+    private boolean terminate;
 
     @BeforeEach
     public void setUp() {
         loanId = 111111;
         loanTaker = new LibraryUser ();
         book = new Book();
-        terminated = true;
+        terminate = true;
 
-        testObject = new Loan(loanId, loanTaker, book, LocalDate.parse("2020-10-20"), terminated);
+        testObject = new Loan(loanId, loanTaker, book, LocalDate.parse("2020-10-20"), terminate);
     }
 
     @Test
@@ -33,18 +33,18 @@ public class LoanTest {
         assertEquals(loanTaker, testObject.getLoanTaker());
         assertEquals(book, testObject.getBook());
         assertEquals(LocalDate.parse("2020-10-20"), testObject.getLoanDate());
-        assertEquals(terminated, testObject.isTerminated());
+        assertEquals(terminate, testObject.isTerminate());
     }
 
     @Test
     public void test_equal() {
-        Loan isEqual = new Loan(loanId, loanTaker, book, LocalDate.parse("2020-10-20"), terminated);
+        Loan isEqual = new Loan(loanId, loanTaker, book, LocalDate.parse("2020-10-20"), terminate);
         assertTrue(testObject.equals(isEqual));
     }
 
     @Test
     public void test_hashCode() {
-        Loan expected = new Loan(loanId, loanTaker, book, LocalDate.parse("2020-10-20"), terminated);
+        Loan expected = new Loan(loanId, loanTaker, book, LocalDate.parse("2020-10-20"), terminate);
         assertEquals(expected.hashCode(), testObject.hashCode());
     }
 
