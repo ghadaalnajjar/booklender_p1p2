@@ -33,6 +33,5 @@ public class LibraryUserRepositoryTest {
         List<LibraryUser> findByEmail = testObject.findByEmail("m@yahoo.com");
         System.out.println("findByEmail = " + findByEmail);
         assertEquals("m@yahoo.com", libraryUser.getEmail());
-
 }
     }
