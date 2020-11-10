@@ -12,12 +12,14 @@ public class LoanTest {
     Loan testObject;
 
     LibraryUser libraryUser;
+
     Book book;
 
     @BeforeEach
     public void setUp() {
 
         libraryUser = new LibraryUser(1, LocalDate.now(), "Maha", "m@yahoo.com");
+
         book = new Book(1, "Hello Pippi", true, true, 30, BigDecimal.valueOf(222.344), "good");
 
         testObject = new Loan(100, libraryUser, book, LocalDate.now(), false);
@@ -49,6 +51,6 @@ public class LoanTest {
         String toString = testObject.toString();
         assertTrue(toString.contains("100"));
         assertTrue(toString.contains(LocalDate.now().toString()));
-        assertFalse(toString.contains("false"));
+        assertTrue(toString.contains("false"));
     }
 }

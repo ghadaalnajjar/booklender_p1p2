@@ -10,10 +10,10 @@ import se.lexicon.alnajjar.booklender.entity.Loan;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 public class LoanRepositoryTest {
@@ -29,13 +29,11 @@ public class LoanRepositoryTest {
     LibraryUser libraryUser;
     Loan loan;
 
-    List<LibraryUser> libraryUsers = new ArrayList<>();
-
     @BeforeEach
     public void setUp() {
-        libraryUser = new LibraryUser(1, LocalDate.now(), "Maha", "m@yahoo.com");
+        libraryUser = new LibraryUser(LocalDate.now(), "Maha", "m@yahoo.com");
         book = new Book(1, "Hello Pippi", true, true, 30, BigDecimal.valueOf(222.344), "good");
-        loan = new Loan(1, libraryUser, book, LocalDate.now(), false);
+        loan = new Loan(libraryUser, book, LocalDate.now(), false);
 
         bookRepository.save(book);
         libraryUserRepository.save(libraryUser);
@@ -43,14 +41,14 @@ public class LoanRepositoryTest {
     }
 
     @Test
-    public void find_By_User_Id() {
-        Loan findByUserId = loanRepository.findByLoanTakerUserId(1);
+    public void findByLoanTakerUserId() {
+        List<Loan> findByUserId = loanRepository.findByLoanTakerUserId(1);
         System.out.println("findByUserId =" + findByUserId.toString());
-        assertEquals(1, findByUserId.getLoanTaker().getUserId());
+        assertTrue(findByUserId.contains(loan));
     }
 
     @Test
-    public void find_By_Book_Id() {
+    public void findByBookBookId() {
         Loan findByBookId = loanRepository.findByBookBookId(1);
         System.out.println("findByBookId =" + findByBookId.toString());
         assertEquals(1, findByBookId.getBook().getBookId());
@@ -61,5 +59,4 @@ public class LoanRepositoryTest {
         List<Loan> findByTerminate = loanRepository.findByTerminate(false);
         System.out.println("findByTerminate =" + findByTerminate.toString());
     }
-
 }

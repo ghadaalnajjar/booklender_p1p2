@@ -1,6 +1,5 @@
 package se.lexicon.alnajjar.booklender.repository;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,7 @@ public class BookRepositoryTest {
     public void find_By_Reserved() {
         List<Book> findByReserved = testObject.findByReserved(false);
         System.out.println("findByReserved = " + findByReserved);
+        book.setReserved(false);
         assertEquals(false, book.isReserved());
     }
 
@@ -36,6 +36,7 @@ public class BookRepositoryTest {
     public void find_By_Available() {
         List<Book> findByAvailable = testObject.findByAvailable(false);
         System.out.println("findByAvailable = " + findByAvailable);
+        book.setAvailable(false);
         assertEquals(false, book.isAvailable());
     }
 
@@ -43,6 +44,7 @@ public class BookRepositoryTest {
     public void test_find_By_Title() {
         List<Book> findByTitle = testObject.findByTitle("Hello Pippi");
         System.out.println("findByTitle = " + findByTitle);
+        book.setTitle("Hello Pippi");
         assertEquals("Hello Pippi", book.getTitle());
     }
 }

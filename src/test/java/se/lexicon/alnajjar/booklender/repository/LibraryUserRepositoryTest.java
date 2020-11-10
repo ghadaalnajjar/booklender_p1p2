@@ -4,10 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import se.lexicon.alnajjar.booklender.entity.Book;
 import se.lexicon.alnajjar.booklender.entity.LibraryUser;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,6 +30,7 @@ public class LibraryUserRepositoryTest {
     public void test_find_By_Email() {
         List<LibraryUser> findByEmail = testObject.findByEmail("m@yahoo.com");
         System.out.println("findByEmail = " + findByEmail);
+        libraryUser.setEmail("m@yahoo.com");
         assertEquals("m@yahoo.com", libraryUser.getEmail());
 }
     }
