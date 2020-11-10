@@ -14,6 +14,22 @@ public class BookDto {
     public BookDto() {
     }
 
+    public BookDto(int bookId, String title, boolean available, boolean reserved, BigDecimal finePerDay, String description) {
+        this.bookId = bookId;
+        this.title = title;
+        this.available = available;
+        this.reserved = reserved;
+        this.finePerDay = finePerDay;
+        this.description = description;
+    }
+
+    public BookDto(int bookId, String title, int maxLoansDays, String description) {
+        this.bookId = bookId;
+        this.title = title;
+        this.maxLoansDays = maxLoansDays;
+        this.description = description;
+    }
+
     public int getBookId() {
         return bookId;
     }
@@ -78,7 +94,6 @@ public class BookDto {
                 ", available=" + available +
                 ", reserved=" + reserved +
                 ", maxLoansDays=" + maxLoansDays +
-                ", finePerDay=" + finePerDay +
                 ", description='" + description + '\'' +
                 '}';
     }
