@@ -64,6 +64,14 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!--   framework for converting DTO object to Entity object and vice-versa     -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.5</version>
+        </dependency>
+
     </dependencies>
 
     <build>

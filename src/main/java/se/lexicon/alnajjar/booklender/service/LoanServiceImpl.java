@@ -8,6 +8,7 @@ import se.lexicon.alnajjar.booklender.entity.Loan;
 import se.lexicon.alnajjar.booklender.repository.LoanRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,36 +25,38 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public LoanDto findById(long loanId) {
-        return mapper.map(findById(loanId), LoanDto.class);
+        Optional<Loan> loan = loanRepository.findById(loanId);
+        if (loan.isPresent()) {
+            return mapper.map(loan, LoanDto.class);
+        }
+        return null;
     }
 
     @Override
     public List<LoanDto> findByBookId(int bookId) {
         List<Loan> loanList = (List<Loan>) loanRepository.findByBookBookId(bookId);
-        List<LoanDto> loanDtoList = loanList.stream().map(loan -> mapper.map(loanRepository, LoanDto.class)).collect(Collectors.toList());
+        List<LoanDto> loanDtoList = loanList.stream().map(loan -> mapper.map(loan, LoanDto.class)).collect(Collectors.toList());
         return loanDtoList;
     }
 
     @Override
     public List<LoanDto> findByUserId(int userId) {
-        List<Loan> loanList = (List<Loan>) loanRepository.findByLoanTakerUserId(userId);
-        List<LoanDto> loanDtoList = loanList.stream().map(loan -> mapper.map(loanRepository, LoanDto.class)).collect(Collectors.toList());
+        List<Loan> loanList = loanRepository.findByLoanTakerUserId(userId);
+        List<LoanDto> loanDtoList = loanList.stream().map(loan -> mapper.map(loan, LoanDto.class)).collect(Collectors.toList());
         return loanDtoList;
     }
 
     @Override
     public List<LoanDto> findByTerminate(boolean terminate) {
-        List<Loan> loanList = (List<Loan>) loanRepository.findByTerminate(terminate);
-        List<LoanDto> loanDtoList = loanList.stream().map(loan -> mapper.map(loanRepository, LoanDto.class)).collect(Collectors.toList());
-        return loanDtoList;
+        List<Loan> loanList = loanRepository.findByTerminate(terminate);
+        return loanList.stream().map(loan -> mapper.map(loan, LoanDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public List<LoanDto> findAll() {
         List<Loan> loanList = (List<Loan>) loanRepository.findAll();
         //stream get object - mapper
-        List<LoanDto> loanDtoList = loanList.stream().map(loan -> mapper.map(loanRepository ,LoanDto.class)).collect(Collectors.toList());
-        return loanDtoList;
+        return loanList.stream().map(loan -> mapper.map(loan ,LoanDto.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -65,12 +68,14 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public LoanDto update(LoanDto loanDto) {
-        return mapper.map(loanDto.getLoanId(), LoanDto.class);
+        Loan entityLoan = mapper.map(loanDto, Loan.class);
+        Loan saveLoan = loanRepository.save(entityLoan);
+        return mapper.map(saveLoan, LoanDto.class);
     }
 
     @Override
     public boolean delete(long loanId) {
-        mapper.map(delete(loanId), LoanDto.class);
-        return false;
+        loanRepository.deleteById(loanId);
+        return true;
     }
 }

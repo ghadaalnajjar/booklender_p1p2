@@ -7,7 +7,8 @@ import se.lexicon.alnajjar.booklender.dto.LibraryUserDto;
 import se.lexicon.alnajjar.booklender.entity.LibraryUser;
 import se.lexicon.alnajjar.booklender.repository.LibraryUserRepository;
 
-import java.util.List;
+import java.util.*;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,28 +25,41 @@ public class LibraryUserServiceImpl implements LibraryUserService {
 
     @Override
     public LibraryUserDto findById(int userId) {
-        return mapper.map(findById(userId), LibraryUserDto.class);
+        Optional<LibraryUser> libraryUser = libraryUserRepository.findById(userId);
+        if (libraryUser.isPresent()) {
+            return mapper.map(libraryUser, LibraryUserDto.class);
+        }
+        return null;
     }
 
     @Override
     public LibraryUserDto findByEmail(String email) {
-        if (email == null || email.trim().length() <= 1){
+        if (email == null || email.trim().length() <= 1) {  // used 1 not 0
             throw new IllegalArgumentException("Email cannot be null");
         }
-        List<LibraryUser> libraryUser = libraryUserRepository.findByEmail(email);
-        if (libraryUser.isEmpty()) {
-            LibraryUserDto libraryUserDto = mapper.map(libraryUser.get(1), LibraryUserDto.class);
-            return libraryUserDto;
+        Optional<LibraryUser> libraryUser = libraryUserRepository.findByEmailIgnoreCase(email);
+        if (libraryUser.isPresent()) {
+            LibraryUserDto dto = mapper.map(libraryUser.get(), LibraryUserDto.class);
+            return dto;
         } else {
-            throw new IllegalArgumentException("Email :["+email+"] Dose not exist");
+            throw new IllegalArgumentException("Email :[" + email + "] Dose not exist");
         }
     }
 
     @Override
     public List<LibraryUserDto> findAll() {
         List<LibraryUser> bookList = (List<LibraryUser>) libraryUserRepository.findAll();
-        //stream get object - mapper
-        List<LibraryUserDto> bookDtoList = bookList.stream().map(libraryUser -> mapper.map(libraryUserRepository ,LibraryUserDto.class)).collect(Collectors.toList());
+        //stream get object - mapper (this used stream)
+        // List<LibraryUserDto> bookDtoList = bookList.stream().map(libraryUser -> mapper.map(libraryUser ,LibraryUserDto.class)).collect(Collectors.toList());
+        //return bookDtoList;
+
+        List<LibraryUserDto> bookDtoList = new ArrayList<>(); // this is another basic solution
+        for (int i = 0; i < bookList.size(); i++) {
+            LibraryUser libraryUser = bookList.get(i);
+
+            LibraryUserDto libraryUserDto = mapper.map(libraryUser, LibraryUserDto.class);
+            bookDtoList.add(libraryUserDto);
+        }
         return bookDtoList;
     }
 
@@ -58,12 +72,14 @@ public class LibraryUserServiceImpl implements LibraryUserService {
 
     @Override
     public LibraryUserDto update(LibraryUserDto libraryUserDto) {
-        return mapper.map(libraryUserDto.getUserId(), LibraryUserDto.class);
+        LibraryUser entityLibraryUser = mapper.map(libraryUserDto, LibraryUser.class);
+        LibraryUser saveLibraryUser = libraryUserRepository.save(entityLibraryUser);
+        return mapper.map(saveLibraryUser, LibraryUserDto.class);
     }
 
     @Override
     public boolean delete(int userId) {
-        mapper.map(delete(userId), LibraryUserDto.class);
-        return false;
+        libraryUserRepository.deleteById(userId);
+        return true;
     }
 }

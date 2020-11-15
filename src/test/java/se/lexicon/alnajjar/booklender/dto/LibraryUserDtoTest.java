@@ -12,7 +12,12 @@ public class LibraryUserDtoTest {
 
     @BeforeEach
     public void setup() {
-        testObject = new LibraryUserDto(11, LocalDate.now(), "Maha", "t@yahoo.com");
+        testObject = new LibraryUserDto();
+
+        testObject.setUserId(11);
+        testObject.setRegDate(LocalDate.now());
+        testObject.setName("Maha");
+        testObject.setEmail("t@yahoo.com");
     }
 
     @Test
@@ -24,8 +29,9 @@ public class LibraryUserDtoTest {
     }
 
     @Test
-    public void test_toString() {
+    public void toString_Test() {
         String toString = testObject.toString();
+
         assertTrue(toString.contains(String.valueOf(testObject.getUserId())));
         assertTrue(toString.contains(testObject.getRegDate().toString()));
         assertTrue(toString.contains(testObject.getName()));

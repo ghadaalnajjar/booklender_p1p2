@@ -15,7 +15,11 @@ public class LoanDtoTest {
     void setUp() {
         testLibraryUser = new LibraryUserDto();
         testBook = new BookDto();
-        testObject = new LoanDto(10, LocalDate.now(),false);
+        testObject = new LoanDto();
+
+        testObject.setLoanId(10);
+        testObject.setLoanDate(LocalDate.now());
+        testObject.setTerminate(false);
     }
 
     @Test

@@ -1,34 +1,23 @@
 package se.lexicon.alnajjar.booklender.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public class BookDto {
     private int bookId;
+    @NotNull(message = "'name' cannot be null")
+    @Size(min = 2,max = 40)
     private String title;
     private boolean available;
     private boolean reserved;
+    @Min(value = 30,message = " 'maxLoansDays' must be grater than 30")
     private int maxLoansDays;
     private BigDecimal finePerDay;
+    @NotNull(message = "'name' cannot be null")
+    @Size(min = 2,max = 40)
     private String description;
-
-    public BookDto() {
-    }
-
-    public BookDto(int bookId, String title, boolean available, boolean reserved, BigDecimal finePerDay, String description) {
-        this.bookId = bookId;
-        this.title = title;
-        this.available = available;
-        this.reserved = reserved;
-        this.finePerDay = finePerDay;
-        this.description = description;
-    }
-
-    public BookDto(int bookId, String title, int maxLoansDays, String description) {
-        this.bookId = bookId;
-        this.title = title;
-        this.maxLoansDays = maxLoansDays;
-        this.description = description;
-    }
 
     public int getBookId() {
         return bookId;
@@ -94,6 +83,7 @@ public class BookDto {
                 ", available=" + available +
                 ", reserved=" + reserved +
                 ", maxLoansDays=" + maxLoansDays +
+                ", finePerDay=" + finePerDay +
                 ", description='" + description + '\'' +
                 '}';
     }
